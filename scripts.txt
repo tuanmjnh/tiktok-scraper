@@ -1,0 +1,8 @@
+# Run python file
+python tiktok_scrape.py --file 1 --delay 3 --url https://www.tiktok.com/@tmfishing90
+
+# Run exe file
+tts --file 1 --delay 3 --url https://www.tiktok.com/@tmfishing90
+
+# Build exe for windows
+pyinstaller --onefile tiktok_scrape.py
