@@ -1,8 +1,12 @@
-# Run python file
-python tiktok_scrape.py --file 1 --delay 3 --url https://www.tiktok.com/@tmfishing90
-
-# Run exe file
-tts --file 1 --delay 3 --url https://www.tiktok.com/@tmfishing90
+# Install
+pip install pyinstaller
+pip install bs4
 
 # Build exe for windows
 pyinstaller --onefile tiktok_scrape.py
+
+# Run python file
+python tiktok_scrape.py --file 1 --delay 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@ntmusic0108"
+
+# Run exe file
+tiktok_scrape --file 1 --delay 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@ntmusic0108"

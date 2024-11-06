@@ -1,0 +1,2 @@
+# Run exe file
+tiktok_scrape --file 1 --delay 6 --class css-1uqux2o-DivItemContainerV2
