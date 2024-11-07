@@ -152,7 +152,7 @@ def getLink(args):
             for i, u in enumerate(urlsToDownload):
                 if i >= args.count:
                     break
-                f = open(f"{linksFolder}/{channelName}.txt", "a")  # a append, w overwrite
+                f = open(f"{linksFolder}/{args.index}.{channelName}.txt", "a")  # a append, w overwrite
                 if (i == len(urlsToDownload)-1):
                     f.write(f"{u}")
                 else:
@@ -228,6 +228,7 @@ else:
             time.sleep(3)
             args.url = opts[0]
             args.count = opts[1]
+            args.index = i+1
             getLink(args)
         # urlsOpts.append(opts)
     # print(urlsOpts)
