@@ -8,6 +8,8 @@ from bs4 import BeautifulSoup
 import time
 import requests
 from urllib.request import urlopen
+import csv
+from datetime import datetime
 
 urlsFile = 'urls.txt'
 linksFolder = 'links'
@@ -76,15 +78,34 @@ def downloadVideo(link, id):
                 break
 
 
+def writeTextFile(args):
+    f = open(args.output, "a")  # a append, w overwrite
+    for i, u in enumerate(args.urlsToDownload):
+        if args.count > -1 and i >= args.count:
+            break
+        if (i == len(args.urlsToDownload)-1):
+            f.write(f"{u}") if args.multipe > 0 else f.write(f"{args.channelName}\t{u}")
+        else:
+            f.write(f"{u}{args.split}") if args.multipe > 0 else f.write(f"{args.channelName}\t{u}{args.split}")
+    f.close()
+
+
+def writeCSVFile(args):
+    with open(args.output, 'a', newline='') as csvfile:
+        fieldnames = ['No.', 'Channel', 'Url']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        if args.index == 1:
+            writer.writeheader()
+        for i, u in enumerate(args.urlsToDownload):
+            if args.count > -1 and i >= args.count:
+                break
+            writer.writerow({'No.': i+1, 'Channel': args.channelName, 'Url': u})
+
+
 def getLink(args):
     # get channel key
     regex = re.search(r'(?<=@)\w+', args.url)
-    channelName = regex.group(0)
-
-    # remove text links if exist
-    if os.path.exists(f"{channelName}.txt"):
-        os.remove(f"{channelName}.txt")
-    #   os.rmdir(f"{channelName}.txt")
+    args.channelName = regex.group(0)
 
     # print("STEP 1: Open Chrome browser")
     options = Options()
@@ -101,8 +122,12 @@ def getLink(args):
     time.sleep(1)
 
     # Count scroll
-    if args.count == None:
+    if hasattr(args, 'count') == False or args.count == None:
         args.count = -1
+
+    # Index
+    if hasattr(args, 'index') == False or args.index == None:
+        args.index = 1
 
     # scroll_pause_time = 5
     if (args.delay == None):
@@ -136,28 +161,12 @@ def getLink(args):
     script += "});"
     script += "return l;"
 
-    urlsToDownload = driver.execute_script(script)
+    args.urlsToDownload = driver.execute_script(script)
 
-    # print(f"STEP 3: Time to download {len(urlsToDownload)} videos")
-    if (args.file > 0):
-        if args.count == -1:
-            for i, u in enumerate(urlsToDownload):
-                f = open(f"{linksFolder}/{channelName}.txt", "a")  # a append, w overwrite
-                if (i == len(urlsToDownload)-1):
-                    f.write(f"{u}")
-                else:
-                    f.write(f"{u}{args.split}")
-                f.close()
-        else:
-            for i, u in enumerate(urlsToDownload):
-                if i >= args.count:
-                    break
-                f = open(f"{linksFolder}/{args.index}.{channelName}.txt", "a")  # a append, w overwrite
-                if (i == len(urlsToDownload)-1):
-                    f.write(f"{u}")
-                else:
-                    f.write(f"{u}{args.split}")
-                f.close()
+    if args.file > 0 and args.csv == 0:
+        writeTextFile(args)
+    elif args.file > 0 and args.csv > 0:
+        writeCSVFile(args)
     else:
         print(u)
         # print(f"Downloading video: {index}: {url}")
@@ -184,12 +193,36 @@ parser.add_argument('--url', dest='url', type=str, help='url channel')
 parser.add_argument('--class', dest='className', type=str, help='class name content')
 parser.add_argument('--file', dest='file', type=int, help='write to file')
 parser.add_argument('--delay', dest='delay', type=int, help='delay scroll')
+parser.add_argument('--count', dest='count', type=int, help='number of link to get')
+parser.add_argument('--csv', dest='csv', type=int, help='export to csv file')
+parser.add_argument('--multipe', dest='multipe', type=int, help='Each channel is a file')
 parser.add_argument('--split', dest='split', type=str, help='split character')
 args = parser.parse_args()
 
-# Fix argument write file
+# Fix arguments
 if (args.file == None):
     args.file = 0
+if (args.csv == None):
+    args.csv = 0
+if (args.multipe == None):
+    args.multipe = 0
+now = datetime.now()  # current date and time
+args.output = now.strftime("%Y-%m-%d-%H-%M-%S-%f")
+
+if args.multipe > 0:
+    args.output = f"{linksFolder}/{args.index}.{args.channelName}"
+else:
+    args.output = f"{linksFolder}/{args.output}"
+if args.csv > 0:
+    args.output = f"{args.output}.csv"
+else:
+    args.output = f"{args.output}.txt"
+
+
+# remove file links if exist
+if os.path.exists(args.output):
+    os.remove(args.output)
+
 if (args.split == None):
     args.split = '\n'
 # check input link channel

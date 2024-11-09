@@ -5,8 +5,79 @@ pip install bs4
 # Build exe for windows
 pyinstaller --onefile tiktok_scrape.py
 
+# Guide
+- file: 1 là xuất link video ra file, 0 là in ra thông báo
+- delay: số giây chờ mỗi lần cuộn xuống
+- csv: 1 là xuất ra dạng CSV, 0 là xuất ra dạng text
+- multipe: 1 là với mỗi kênh xuất ra 1 file, 0 là gộp toàn bộ kênh vào thành 1 file
+- count: -1 là lấy toàn bộ link video, > 0 là số lượng link video muốn lấy
+- class: tên class của từng video trên tiktok (Không nên sửa nếu không biết, Mở Inspect trên trang để lấy nếu tiktok có cập nhật)
+- url: Là lấy link trược tiếp của 1 kênh
+
 # Run python file
-python tiktok_scrape.py --file 1 --delay 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@ntmusic0108"
+## CSV
+- Xuất ra file CSV với mỗi kênh là 1 file và lấy hết video
+python tiktok_scrape.py --file 1 --delay 6 --csv 1 --multipe 1 --count -1 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+- Xuất ra file CSV với mỗi kênh là 1 file và lấy 6 video
+python tiktok_scrape.py --file 1 --delay 6 --csv 1 --multipe 1 --count 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+- Xuất ra file CSV gộp toàn bộ kênh vào thành 1 file và lấy hết video
+python tiktok_scrape.py --file 1 --delay 6 --csv 1 --multipe 0 --count -1 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+- Xuất ra file CSV gộp toàn bộ kênh vào thành 1 file và lấy 6 video
+python tiktok_scrape.py --file 1 --delay 6 --csv 1 --multipe 0 --count 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+## TXT
+- Xuất ra file Text với mỗi kênh là 1 file và lấy hết video
+python tiktok_scrape.py --file 1 --delay 6 --csv 0 --multipe 1 --count -1 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+- Xuất ra file Text với mỗi kênh là 1 file và lấy 6 video
+python tiktok_scrape.py --file 1 --delay 6 --csv 0 --multipe 1 --count 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+- Xuất ra file Text gộp toàn bộ kênh vào thành 1 file và lấy hết video
+python tiktok_scrape.py --file 1 --delay 6 --csv 0 --multipe 0 --count -1 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+- Xuất ra file Text gộp toàn bộ kênh vào thành 1 file và lấy 6 video
+python tiktok_scrape.py --file 1 --delay 6 --csv 0 --multipe 0 --count 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
 
 # Run exe file
-tiktok_scrape --file 1 --delay 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@ntmusic0108"
+## CSV Url
+- Xuất ra file CSV với mỗi kênh là 1 file và lấy hết video
+python tiktok_scrape.py --file 1 --delay 6 --csv 1 --multipe 1 --count -1 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+- Xuất ra file CSV với mỗi kênh là 1 file và lấy 6 video
+python tiktok_scrape.py --file 1 --delay 6 --csv 1 --multipe 1 --count 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+- Xuất ra file CSV gộp toàn bộ kênh vào thành 1 file và lấy hết video
+python tiktok_scrape.py --file 1 --delay 6 --csv 1 --multipe 0 --count -1 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+- Xuất ra file CSV gộp toàn bộ kênh vào thành 1 file và lấy 6 video
+python tiktok_scrape.py --file 1 --delay 6 --csv 1 --multipe 0 --count 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+## CSV
+- Xuất ra file CSV với mỗi kênh là 1 file và lấy video
+tiktok_scrape --file 1 --delay 6 --csv 1 --multipe 1 --class css-1uqux2o-DivItemContainerV2
+
+- Xuất ra file CSV gộp toàn bộ kênh vào thành 1 file và lấy video
+tiktok_scrape --file 1 --delay 6 --csv 1 --multipe 0 --class css-1uqux2o-DivItemContainerV2
+
+## TXT Url
+- Xuất ra file Text với mỗi kênh là 1 file và lấy hết video
+python tiktok_scrape.py --file 1 --delay 6 --csv 0 --multipe 1 --count -1 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+- Xuất ra file Text với mỗi kênh là 1 file và lấy 6 video
+python tiktok_scrape.py --file 1 --delay 6 --csv 0 --multipe 1 --count 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+- Xuất ra file Text gộp toàn bộ kênh vào thành 1 file và lấy hết video
+python tiktok_scrape.py --file 1 --delay 6 --csv 0 --multipe 0 --count -1 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+- Xuất ra file Text gộp toàn bộ kênh vào thành 1 file và lấy 6 video
+python tiktok_scrape.py --file 1 --delay 6 --csv 0 --multipe 0 --count 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
+## TXT
+- Xuất ra file Text với mỗi kênh là 1 file và lấy video
+tiktok_scrape --file 1 --delay 6 --csv 0 --multipe 1 --class css-1uqux2o-DivItemContainerV2
+
+- Xuất ra file Text gộp toàn bộ kênh vào thành 1 file và lấy ideo
+tiktok_scrape --file 1 --delay 6 --csv 0 --multipe 0 --class css-1uqux2o-DivItemContainerV2
