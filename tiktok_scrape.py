@@ -10,6 +10,7 @@ import requests
 from urllib.request import urlopen
 import csv
 from datetime import datetime
+import numpy as np
 
 urlsFile = 'urls.txt'
 linksFolder = 'links'
@@ -102,6 +103,15 @@ def writeCSVFile(args):
             writer.writerow({'No.': i+1, 'Channel': args.channelName, 'Url': u})
 
 
+def writeCSVFile2(args):
+    with open(args.output, 'a', newline='') as csvfile:
+        spamwriter = csv.writer(csvfile)
+        arr = np.array(args.urlsToDownload)
+        csvFile = arr[:args.count] if args.count > -1 else arr
+        csvFile = [f'https://www.tiktok.com/@{args.channelName}'] + csvFile.tolist()
+        spamwriter.writerow(csvFile)
+
+
 def getLink(args):
     # get channel key
     regex = re.search(r'(?<=@)\w+', args.url)
@@ -165,8 +175,10 @@ def getLink(args):
 
     if args.file > 0 and args.csv == 0:
         writeTextFile(args)
-    elif args.file > 0 and args.csv > 0:
+    elif args.file > 0 and args.csv == 1:
         writeCSVFile(args)
+    elif args.file > 0 and args.csv > 1:
+        writeCSVFile2(args)
     else:
         print(u)
         # print(f"Downloading video: {index}: {url}")

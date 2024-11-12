@@ -1,6 +1,7 @@
 # Install
 pip install pyinstaller
 pip install bs4
+pip install numpy
 
 # Build exe for windows
 pyinstaller --onefile tiktok_scrape.py
@@ -55,12 +56,18 @@ python tiktok_scrape.py --file 1 --delay 6 --csv 1 --multipe 0 --count -1 --clas
 - Xuất ra file CSV gộp toàn bộ kênh vào thành 1 file và lấy 6 video
 python tiktok_scrape.py --file 1 --delay 6 --csv 1 --multipe 0 --count 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
 
+- Xuất ra file CSV gộp toàn bộ kênh vào thành 1 file và lấy 6 video (loại 2)
+python tiktok_scrape.py --file 1 --delay 6 --csv 2 --multipe 0 --count 6 --class css-1uqux2o-DivItemContainerV2 --url "https://www.tiktok.com/@tuanmjnh90"
+
 ## CSV
 - Xuất ra file CSV với mỗi kênh là 1 file và lấy video
 tiktok_scrape --file 1 --delay 6 --csv 1 --multipe 1 --class css-1uqux2o-DivItemContainerV2
 
 - Xuất ra file CSV gộp toàn bộ kênh vào thành 1 file và lấy video
 tiktok_scrape --file 1 --delay 6 --csv 1 --multipe 0 --class css-1uqux2o-DivItemContainerV2
+
+- Xuất ra file CSV gộp toàn bộ kênh vào thành 1 file và lấy video (loại 2)
+tiktok_scrape --file 1 --delay 6 --csv 2 --multipe 0 --class css-1uqux2o-DivItemContainerV2
 
 ## TXT Url
 - Xuất ra file Text với mỗi kênh là 1 file và lấy hết video
